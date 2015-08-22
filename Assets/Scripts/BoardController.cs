@@ -5,15 +5,26 @@ public class BoardController : MonoBehaviour {
 
 	public float wValue;
 
+	public GameObject prefabPickup;
+	public int numPickups;
+	
+
 	// Use this for initialization
 	void Start () {
+
+		//add pickups at random positions on the game board
+		for (int i = 0; i < numPickups; i++){
+
+			GameObject newPickup = Instantiate (prefabPickup);
+
+			Vector3 newPosition = new Vector3 (Random.Range (-9f, 9f), 0.5f, Random.Range (-9f, 9f));
+			newPickup.transform.position = newPosition;
+
+		}
+
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 
 	void FixedUpdate() {
 
@@ -23,4 +34,7 @@ public class BoardController : MonoBehaviour {
 		transform.rotation = new Quaternion(rotationX, 0.0f, -rotationZ, wValue);
 
 	}
+	
+
 }
+
