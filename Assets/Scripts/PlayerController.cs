@@ -59,8 +59,7 @@ public class PlayerController : MonoBehaviour {
 
 		countText.text = "Count: " + count.ToString(); //update UI
 
-		if (count >= 11){
-
+		if (count >= 11)
 			winTimeInSeconds = Time.time;
 			winText.text = "You Win! It took you " + winTimeInSeconds + " seconds.";
 

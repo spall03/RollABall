@@ -17,7 +17,7 @@ public class BoardController : MonoBehaviour {
 
 			GameObject newPickup = Instantiate (prefabPickup);
 
-			Vector3 newPosition = new Vector3 (Random.Range (-9f, 9f), 0.5f, Random.Range (-9f, 9f));
+			Vector3 newPosition = new Vector3 (Random.Range (-8f, 8f), 0.5f, Random.Range (-8f, 8f));
 			newPickup.transform.position = newPosition;
 
 		}
