@@ -57,9 +57,9 @@ public class PlayerController : MonoBehaviour {
 
 	void SetCountText(){
 
-		countText.text = "Count: " + count.ToString(); //update UI
+		countText.text = "Pickups remaining: " + (11 - count).ToString(); //update UI
 
-		if (count >= 11)
+		if (count >= 11){
 			winTimeInSeconds = Time.time;
 			winText.text = "You Win! It took you " + winTimeInSeconds + " seconds.";
 
