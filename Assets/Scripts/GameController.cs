@@ -13,13 +13,14 @@ public class GameController : MonoBehaviour {
 	public Text winText;
 
 	private int count; //score counter
-	
 	private float winTimeInSeconds;
+	private bool gameOver;
 
 	// Use this for initialization
 	void Start () {
 
 		S = this;
+		gameOver = false;
 
 		placePickups();
 		initGUI();
@@ -61,8 +62,9 @@ public class GameController : MonoBehaviour {
 		countText.text = "Pickups remaining: " + (numPickups - count).ToString(); //update UI
 		
 		if (count == numPickups){
-			winTimeInSeconds = Time.time;
-			winText.text = "You Win! It took you " + winTimeInSeconds + " seconds.";
+			winTimeInSeconds = Mathf.Round(Time.timeSinceLevelLoad);
+			winText.text = "You Win! It took you " + winTimeInSeconds + " seconds. Press R to play again.";
+			gameOver = true;
 			
 		}
 		
@@ -70,6 +72,13 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (gameOver == true){
+
+			if(Input.GetKeyDown(KeyCode.R))
+				Application.LoadLevel("Minigame"); //reset the game
+
+		}
 	
 	}
 }
