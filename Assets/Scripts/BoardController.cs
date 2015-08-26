@@ -4,16 +4,15 @@ using System.Collections;
 public class BoardController : MonoBehaviour {
 
 	public float wValue;
+	
+
 
 	// Use this for initialization
 	void Start () {
+
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 
 	void FixedUpdate() {
 
@@ -23,4 +22,7 @@ public class BoardController : MonoBehaviour {
 		transform.rotation = new Quaternion(rotationX, 0.0f, -rotationZ, wValue);
 
 	}
+	
+
 }
+
