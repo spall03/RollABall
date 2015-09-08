@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
 
 	static public GameController S;
 
 	public int numPickups;
+	public float exclusionRadius;
 	public GameObject prefabPickup;
 
 	public Text countText;
@@ -15,6 +16,7 @@ public class GameController : MonoBehaviour {
 	private int count; //score counter
 	private float winTimeInSeconds;
 	private bool gameOver;
+	private List<Vector3> positionList; //storing pickups for position checking
 
 	// Use this for initialization
 	void Start () {
@@ -30,15 +32,69 @@ public class GameController : MonoBehaviour {
 	//scattered pickups randomly across the board
 	void placePickups () {
 
+		positionList = new List<Vector3>();
+
+		//first get a list of acceptable positions
 		for (int i = 0; i < numPickups; i++){
 			
-			GameObject newPickup = Instantiate (prefabPickup);
-			
-			Vector3 newPosition = new Vector3 (Random.Range (-8f, 8f), 0.5f, Random.Range (-8f, 8f));
-			newPickup.transform.position = newPosition;
-			
+
+			Vector3 newPosition = generateNewPosition();
+
+			if (i == 0){
+
+				positionList.Add(newPosition); //this is the starting point
+
+			}
+			else{
+
+				positionList.Add(positionCheck(newPosition)); //get an acceptable position
+
+			}
+
+
 		}
-	
+
+
+		//then build and place the pickups
+		foreach (Vector3 pos in positionList){ 
+
+			GameObject newPickup = Instantiate (prefabPickup);
+			newPickup.transform.position = pos;
+
+
+		}
+		
+	}
+
+
+	//check to make sure that each new pickup is adequately spaced from the other pickups already placed
+	Vector3 positionCheck (Vector3 newPosition){
+
+		foreach (Vector3 pos in positionList){
+
+
+			float distance = Vector3.Distance (pos, newPosition);
+
+			//not okay, generate new candidate position and start a new check
+			if (distance < exclusionRadius){
+
+				newPosition = generateNewPosition();
+				positionCheck(newPosition);
+
+			}
+		
+
+		}
+
+		return newPosition;
+
+
+	}
+
+	Vector3 generateNewPosition (){
+
+		return new Vector3 (Random.Range (-8f, 8f), 0.5f, Random.Range (-8f, 8f));
+
 	}
 
 	//initiates the game's GUI
